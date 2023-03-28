@@ -321,7 +321,7 @@
                     <tr>
                       <td class="title">
                         <img
-                          src="../assets/logo.fw.png"
+                          src="../assets/main_logo2.png"
                           alt="Nenyahsa FX"
                           style="width: 100%; max-width: 300px"
                         />
@@ -421,7 +421,7 @@
                     <tr>
                       <td class="title">
                         <img
-                          src="../assets/logo.fw.png"
+                          src="../assets/main_logo2.png"
                           alt="ContiCash FX"
                           style="width: 100%; max-width: 300px"
                         />
@@ -517,8 +517,8 @@
                 <tr>
                   <td class="title" style="text-align: centre">
                     <img
-                      src="../assets/logo.fw.png"
-                      alt="ContiCash FX"
+                      src="../assets/main_logo2.png"
+                      alt="Sahwira FX"
                       style="width: 100%; max-width: 300px"
                     />
                   </td>

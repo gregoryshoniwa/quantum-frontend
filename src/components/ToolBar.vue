@@ -2,27 +2,28 @@
   <v-toolbar extended color="white gradient">
     <v-toolbar-title class="headline text-uppercase">
       <v-flex pr-1 class="hidden-sm-and-down">
-        <div style="margin-top: 10px">
+        <div style="margin-top: 30px">
           <img
             src="../assets/main_logo.png"
-            alt="nenyasha"
+            alt="sahwira"
             style="max-width: 100px; height: auto; margin-top: 2px; float: left"
           />
           <div>
             <span
               style="
                 position: relative;
-                top: 20px;
+                top: 15px;
                 left: 10px;
                 font-weight: bold;
                 font-size: 13px;
+                color: goldenrod;
               "
-              >Nenyasha Financial Services</span
+              >Sahwira Money Transfer Agency</span
             >
           </div>
 
           <div>
-            <span style="margin-left: 10px; font-size: 10px"
+            <span style="margin-left: 10px; font-size: 10px;position: relative; top: -5px;"
               >REGISTERED BUREAU DE CHANGE</span
             >
           </div>
@@ -512,8 +513,8 @@
                         <tr>
                           <td class="title">
                             <img
-                              src="../assets/main_logo.png"
-                              style="width: 100%; max-width: 250px"
+                              src="../assets/main_logo2.png"
+                              style="width: 100%; max-width: 300px"
                             />
                           </td>
                         </tr>
@@ -1060,8 +1061,8 @@
                         <tr>
                           <td class="title">
                             <img
-                              src="../assets/CONTISEND.png"
-                              style="width: 100%; max-width: 250px"
+                              src="../assets/main_logo2.png"
+                              style="width: 100%; max-width: 300px"
                             />
                           </td>
                         </tr>
@@ -1918,8 +1919,8 @@
                 <tr>
                   <td class="title" style="text-align: centre">
                     <img
-                      src="../assets/main_logo.png"
-                      alt="ContiCash FX"
+                      src="../assets/main_logo2.png"
+                      alt="Sahwira"
                       style="width: 100%; max-width: 250px"
                     />
                   </td>
@@ -2055,7 +2056,7 @@
                 <tr>
                   <td class="title" style="text-align: centre">
                     <img
-                      src="../assets/main_logo.png"
+                      src="../assets/main_logo2.png"
                       alt="ContiCash FX"
                       style="width: 100%; max-width: 250px"
                     />
@@ -2195,8 +2196,8 @@
                 <tr>
                   <td class="title" style="text-align: centre">
                     <img
-                      src="../assets/main_logo.png"
-                      alt="ContiCash FX"
+                      src="../assets/main_logo2.png"
+                      alt="Sahwira"
                       style="width: 100%; max-width: 250px"
                     />
                   </td>
@@ -2323,7 +2324,7 @@
                 <tr>
                   <td class="title" style="text-align: centre">
                     <img
-                      src="../assets/main_logo.png"
+                      src="../assets/main_logo2.png"
                       alt="ContiCash FX"
                       style="width: 100%; max-width: 250px"
                     />
@@ -2455,7 +2456,7 @@
                   <td class="title" style="text-align: centre">
                     <img
                       src="../assets/CONTISEND.png"
-                      alt="ContiCash FX"
+                      alt="Sahwira"
                       style="width: 100%; max-width: 250px"
                     />
                   </td>
@@ -2585,8 +2586,8 @@
                 <tr>
                   <td class="title" style="text-align: centre">
                     <img
-                      src="../assets/CONTISEND.png"
-                      alt="ContiCash FX"
+                      src="../assets/main_logo2.png"
+                      alt="Sahwira"
                       style="width: 100%; max-width: 250px"
                     />
                   </td>

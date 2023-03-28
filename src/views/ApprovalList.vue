@@ -307,7 +307,7 @@
                     <table>
                         <tr>
                             <td class="title" style="text-align: centre;">
-                                <img src="../assets/logo.fw.png" alt="ContiCash FX" style="width:100%; max-width:300px;">
+                                <img src="../assets/main_logo2.png" alt="ContiCash FX" style="width:100%; max-width:300px;">
                             </td>                         
                             
                         </tr>
@@ -464,7 +464,7 @@
                     <table>
                         <tr>
                             <td class="title" style="text-align: centre;">
-                                <img src="../assets/logo.fw.png" alt="ContiCash FX" style="width:100%; max-width:300px;">
+                                <img src="../assets/main_logo2.png" alt="Sahwira" style="width:100%; max-width:300px;">
                             </td>                         
                             
                         </tr>

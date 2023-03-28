@@ -825,6 +825,10 @@ export default {
 </script>
 
 <style scoped>
+h2 {
+  color: goldenrod;
+  padding-bottom: 10px;
+}
 .custom-loader {
   animation: loader 1s infinite;
   display: flex;

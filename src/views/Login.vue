@@ -5,7 +5,7 @@
         <v-flex xs12 sm8 md4 style="margin-bottom: 100px">
           <img src="../assets/main_logo.png" alt="logo" class="img1 bounceIn" />
           <div style="text-align: center">
-            <h2>Nenyasha Financial Services</h2>
+            <h2>Sahwira Money Transfer Agency</h2>
             <h4>REGISTERED BUREAU DE CHANGE</h4>
           </div>
           <br />

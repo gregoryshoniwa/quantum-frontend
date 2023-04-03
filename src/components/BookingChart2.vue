@@ -29,8 +29,8 @@
             return {
                 polar: {},
                // graphAPi: 'http://dev.contipay.co.zw:82/https://api-dev.contipay.co.zw/graphsApi?authorization=',
-                nodeApi: 'http://localhost:8081',
-                //nodeApi: 'http://localhost:8081',
+                nodeApi: '',
+                //nodeApi: '',
                 currencyData: [],
                 currencyDataActive: [],
                 branchData:[],

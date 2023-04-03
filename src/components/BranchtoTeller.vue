@@ -161,8 +161,8 @@ export default {
   data() {
     return {
       e1: 0,
-      //nodeApi: 'http://localhost:8081',
-      nodeApi: "http://localhost:8081",
+      //nodeApi: '',
+      nodeApi: "",
       image: "/img/",
       selected: "",
       dialogloader: false,

@@ -46,7 +46,7 @@ Object.defineProperty(Vue.prototype, '$jwt', { value: jwt });
 
 //import io from 'socket.io-client';
 //const socket = io('https://b.contitouch.co.zw');
-//const socket = io('http://localhost:8081')
+//const socket = io('')
 //Object.defineProperty(Vue.prototype, '$socket', { value: socket });
 
 Vue.use(VueAutosuggest);

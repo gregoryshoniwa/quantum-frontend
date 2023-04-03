@@ -295,8 +295,8 @@
     },
     data() {
       return {
-        nodeApi: 'http://localhost:8081',
-        //nodeApi: 'http://localhost:8081',
+        nodeApi: '',
+        //nodeApi: '',
         CurrencyPair: '',
         allClients: [],
         allRates:[],

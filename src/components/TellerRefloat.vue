@@ -133,7 +133,7 @@ import Axios from "axios-observable";
 export default {
   data: () => ({
     valid: true,
-    nodeApi: "http://localhost:8081",
+    nodeApi: "",
     image: "/img/",
     totalFloatHistory: [],
     headersConfig: [

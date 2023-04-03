@@ -162,7 +162,7 @@ export default {
     return {
       e1: 0,
       dialogloader: false,
-      nodeApi: "http://localhost:8081",
+      nodeApi: "",
       image: "/img/",
       selected: "",
       selectedcurrency: "",

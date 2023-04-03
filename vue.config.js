@@ -18,7 +18,7 @@ module.exports = {
       'resize-detector'
     ],
     devServer: {
-        proxy: 'http://localhost:8081'
+        proxy: ''
        
     },
       publicPath: process.env.NODE_ENV === 'production'

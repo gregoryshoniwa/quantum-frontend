@@ -634,7 +634,7 @@ import Axios from  'axios-observable';
       expand: false,
       show_start_date: false,
       dialogdaterange: false,
-      nodeApi: 'http://localhost:8081',
+      nodeApi: '',
       start_date: null,
       is_charged:null,
       show_end_date: false,

@@ -164,7 +164,7 @@ export default {
   },
   data() {
     return {
-      nodeApi: "http://localhost:8081",
+      nodeApi: "",
       image: "/img/",
       CurrencyPair: "",
       timeP: 0,

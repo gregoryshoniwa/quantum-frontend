@@ -253,7 +253,7 @@ export default {
   // props: ['value'],
   data() {
     return {
-      nodeApi: "http://localhost:8081",
+      nodeApi: "",
       userlevelData: [],
       imagezwd: "/img/zwd.png",
       imageusd: "/img/usd.png",

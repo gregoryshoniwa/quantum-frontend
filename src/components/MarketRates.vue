@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       polar: {},
-      nodeApi: "http://localhost:8081",
+      nodeApi: "",
       rawData: [],
       data: 500,
       totalBuys: 0,

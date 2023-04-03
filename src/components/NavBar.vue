@@ -121,8 +121,8 @@ export default {
   data: () => ({
     drawer: true,
     dialogAddBranch: false,
-    nodeApi: "http://localhost:8081",
-    //nodeApi: 'http://localhost:8081',
+    nodeApi: "",
+    //nodeApi: '',
     fixed: true,
     pin: "",
     pinold: "",

@@ -276,7 +276,7 @@ export default {
       rowsPerPage: 15,
     },
     floatAmount: null,
-    nodeApi: "http://localhost:8081",
+    nodeApi: "",
     image: "/img/",
     totalFloatHistory: [],
     userTypeTitle: "",

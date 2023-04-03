@@ -256,7 +256,7 @@ export default {
   },
   data() {
     return {
-      nodeApi: "http://localhost:8081",
+      nodeApi: "",
       e1: 0,
       pinold: "",
       passwordold: "",

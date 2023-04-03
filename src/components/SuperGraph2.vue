@@ -30,7 +30,7 @@ export default {
   data() {
     return {
       polar: {},
-      nodeApi: "http://localhost:8081",
+      nodeApi: "",
       rawData: [],
       branch_id: 1,
       time: 0,

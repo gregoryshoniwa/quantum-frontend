@@ -77,7 +77,7 @@ import Axios from  'axios-observable';
         data() {
             return {
                 polar: {},
-                 nodeApi: 'http://localhost:8081',
+                 nodeApi: '',
                  rawData1:[],
                  rawData2:[],
                  companyFloatTotal:[],

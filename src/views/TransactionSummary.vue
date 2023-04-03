@@ -112,7 +112,7 @@ export default {
                     'descending': true,
                     rowsPerPage: 7
                 },
-            nodeApi: 'http://localhost:8081',
+            nodeApi: '',
               headersStackManagment: [
                              
                 { text: 'Teller', value: 'username' }, 

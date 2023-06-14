@@ -174,7 +174,7 @@ export default {
           { title: "exchange-page", icon: "supervised_user_circle", tooltip: "Clients" },
           { title: "profile-page", icon: "account_circle", tooltip: "Users" },
           { title: "rates-page", icon: "monetization_on", tooltip: "Rates" },
-          { title: "reports-page", icon: "account_balance", tooltip: "Branches" },
+          { title: "branch-page", icon: "account_balance", tooltip: "Branches" },
           {
             title: "floatmove-page",
             icon: "swap_vertical_circle",
@@ -233,7 +233,7 @@ export default {
           { title: "exchange-page", icon: "supervised_user_circle", tooltip: "Clients" },
           { title: "profile-page", icon: "account_circle", tooltip: "Users" },
           { title: "rates-page", icon: "monetization_on", tooltip: "Rates" },
-          { title: "reports-page", icon: "account_balance", tooltip: "Branches" },
+          { title: "branch-page", icon: "account_balance", tooltip: "Branches" },
           {
             title: "floatmove-page",
             icon: "swap_vertical_circle",
@@ -260,7 +260,7 @@ export default {
           { title: "exchange-page", icon: "supervised_user_circle", tooltip: "Clients" },
           { title: "profile-page", icon: "account_circle", tooltip: "Users" },
           { title: "rates-page", icon: "monetization_on", tooltip: "Rates" },
-          { title: "reports-page", icon: "account_balance", tooltip: "Branches" },
+          { title: "branch-page", icon: "account_balance", tooltip: "Branches" },
           {
             title: "floatmove-page",
             icon: "swap_vertical_circle",

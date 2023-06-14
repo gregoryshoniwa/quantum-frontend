@@ -459,11 +459,12 @@ export default {
     },
     dialogAddBranch(val) {
       if (val) {
+        
+      } else {
+        // this.companyFormData = this.ClearCompanyFormData;
         this.companyFormData.branchname = "";
         this.companyFormData.address = "";
         this.companyFormData.phone_number = "";
-      } else {
-        this.companyFormData = this.ClearCompanyFormData;
         this.editCheck = false;
       }
     },

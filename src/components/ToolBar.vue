@@ -2724,7 +2724,6 @@
               @keyup.enter="checkPin"
               v-model="pin"
               autofocus
-              loading
               type="password"
               label="Please enter you security pin"
               required
@@ -2752,7 +2751,6 @@
               @keyup.enter="checkPin"
               v-model="pin"
               autofocus
-              loading
               type="password"
               label="Please enter you security pin"
               required
@@ -3080,6 +3078,7 @@ export default {
   },
   data() {
     return {
+      annonimousId: 5647,
       isShopOpen: 0,
       searched: 0,
       switch1: true,
@@ -6024,7 +6023,7 @@ export default {
     },
     async addsettlement() {
       if (this.annonimous) {
-        this.transactionData.client_id = 70;
+        this.transactionData.client_id = this.annonimousId;
       } else {
         this.transactionData.client_id = this.clientID.id;
       }
@@ -6167,6 +6166,7 @@ export default {
       });
       this.dialogTransaction = false;
       this.$emit("settlement", "complete");
+      
     },
     finishTransactionsSend(tran_id) {
       this.dialogloader = false;

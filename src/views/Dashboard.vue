@@ -269,7 +269,7 @@ import Axios from  'axios-observable';
           value: 'first_name'
         },
         {
-          text: 'Teller',
+          text: 'User',
           value: 'account',
          
         },

@@ -30,7 +30,7 @@ import BookingChart from "@/components/BookingChart";
 //Import pages
 import Dashboard from "./Dashboard";
 
-import HistoryReportsVue from "./HistoryReports.vue";
+import BranchAdminVue from "./BranchAdmin.vue";
 import SupportVue from "./Support.vue";
 import MyProfileVue from "./MyProfile.vue";
 import MarketPlaceVue from "./MarketPlace.vue";
@@ -67,7 +67,7 @@ export default {
     "contisend-page": ContiSend,
     "exchange-page": ExchangeStatusVue,
     "market-page": MarketPlaceVue,
-    "reports-page": HistoryReportsVue,
+    "branch-page": BranchAdminVue,
     "profile-page": MyProfileVue,
     "dash-super": DashboardSuper,
     "dash-manager": DashboardManager,

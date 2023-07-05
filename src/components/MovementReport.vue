@@ -1413,24 +1413,33 @@ export default {
         }
         await Axios.post(this.nodeApi+'/addTreasuryFloat',acountdata,{headers:headers,timeout: 5000})
           .subscribe(res =>{
-            //console.log(res.data)
-            if(res.data.message.one){
+            //console.log(res.data.data)
+            if(res.data.data.one){
                this.dialogloader = false
               this.initializeCompany2()
               
               this.$swal.fire({
                 type: 'success',
                 title: 'Treasury Account Adding',
-                text:  'Treasury account was added successfully'
+                text:   'Treasury account was added successfully'
               })
               
             }else{
                this.dialogloader = false
-            this.$swal.fire({
-                type: 'error',
-                title: 'Treasury Account Adding',
-                text:  res.data.message
-              })
+               if(res.data.message.code == 'ER_DUP_ENTRY'){
+                    this.$swal.fire({
+                    type: 'error',
+                    title: 'Treasury Account Adding',
+                    text:  'Sorry you can only have one account of this currency'
+                  })
+               }else{
+                    this.$swal.fire({
+                    type: 'error',
+                    title: 'Treasury Account Adding',
+                    text:  res.data.message
+                  })
+               }
+           
             }
             
           },err =>{

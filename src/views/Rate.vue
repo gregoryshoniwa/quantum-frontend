@@ -372,7 +372,17 @@ export default {
     openAddNewUser() {
       this.dialogUser = true;
       this.editCheck = false;
-      this.editedUser = this.ClearUser;
+      this.editedUser = {
+        id: 0,
+        currency_id: null,
+        local_currency_id: null,
+        buy_rate: 0,
+        sell_rate: 0,
+
+        status: 2,
+
+        created_by: 0,
+      }
     },
     openAddNewUser2() {
       this.dialogUser2 = true;

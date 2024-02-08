@@ -39,22 +39,25 @@
       <!-- <div class="white--text hidden-sm-and-down">
         <span color="red" style="font-size:20px;margin-left:20px;color:Crimson;">Your Password Has Expired</span>
       </div> -->
-      <!-- <v-tooltip bottom>
-        <template v-slot:activator="{ on }">         
-                  <img
-                  
-                      src="../assets/contisendtr2.png"
-                      alt="logo"
-                      class="imgSend bounceIn" 
-                      v-on="on"  
-                     @click="createTransaction('ContiSend')"  
-                          
-                    >
-        </template>
-        <span>ContiSend</span>
-      </v-tooltip>
+      <div style="margin-top: 40px">
+        <v-tooltip bottom v-if="user_type == 2">
+          <template v-slot:activator="{ on }">         
+                    <img
+                    
+                        src="../assets/main_logo.png"
+                        alt="logo"
+                        class="imgSend bounceIn" 
+                        v-on="on"  
+                      @click="createTransaction('SahwiraSend')"  
+                            
+                      >
+          </template>
+          <span>Sahwira Send</span>
+        </v-tooltip>
+    </div>
       
-      <v-tooltip bottom>
+    <div style="margin-top: 40px">
+      <v-tooltip bottom v-if="user_type == 2">
         <template v-slot:activator="{ on }">         
                   <img
                       src="../assets/worldremit.png"
@@ -67,7 +70,8 @@
         </template>
         <span>World Remit</span>
       </v-tooltip>
-
+      </div>
+     <!--
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">         
                   <img
@@ -647,7 +651,7 @@
             <h3 style="margin-left: 250px">Please select one of the options below</h3>
             <v-flex xs12 mt-5>
               <v-layout row>
-                <v-flex xs4 mt-3>
+                <v-flex xs6 ml-5 mt-3>
                   <div class="ih-item circle effect3 bottom_to_top">
                     <a @click="sendType('Send')">
                       <div class="img"><img src="@/assets/avator.png" alt="img" /></div>
@@ -659,7 +663,7 @@
                   </div>
                 </v-flex>
 
-                <v-flex xs4 ml-5 mt-3>
+                <v-flex xs6 ml-5 mt-3>
                   <div class="ih-item circle effect3 bottom_to_top">
                     <a @click="sendType('Payout')">
                       <div class="img"><img src="@/assets/avator3.png" alt="img" /></div>
@@ -671,7 +675,7 @@
                   </div>
                 </v-flex>
 
-                <v-flex xs4 ml-5 mt-3>
+                <!-- <v-flex xs4 ml-5 mt-3>
                   <div class="ih-item circle effect3 bottom_to_top">
                     <a @click="sendType('Booking')">
                       <div class="img"><img src="@/assets/avator4.png" alt="img" /></div>
@@ -681,7 +685,7 @@
                       </div>
                     </a>
                   </div>
-                </v-flex>
+                </v-flex> -->
               </v-layout>
             </v-flex>
           </v-stepper-content>
@@ -901,7 +905,14 @@
                           </v-tooltip>
                           </v-flex> -->
 
-              <v-flex xs10 sm8 md12>
+                  <v-flex xs12 sm12 md12>
+                    <v-text-field
+                      v-model="contisend.pin"
+                      type="text"
+                      placeholder="Transaction Secret"
+                    ></v-text-field>
+                  </v-flex>
+              <!-- <v-flex xs10 sm8 md12>
                 <v-combobox
                   v-model="contisend.city_name"
                   :items="[
@@ -936,7 +947,7 @@
                   label="Select city to send"
                 >
                 </v-combobox>
-              </v-flex>
+              </v-flex> -->
 
               <v-flex pa-1 xs12 md12>
                 <v-layout row>
@@ -993,7 +1004,7 @@
                 ></v-text-field>
               </v-flex>
 
-              <v-flex xs12 md12 pr-2 v-if="contisend.sendTypeData == 'Booking'">
+              <!-- <v-flex xs12 md12 pr-2 v-if="contisend.sendTypeData == 'Booking'">
                 <v-combobox
                   v-model="contisend.city_name"
                   :items="[
@@ -1028,8 +1039,8 @@
                   label="Select city to send"
                 >
                 </v-combobox>
-              </v-flex>
-            </v-layout>
+              </v-flex>-->
+            </v-layout> 
 
             <v-btn color="primary" @click="gotToTransactionStepSend"> Next </v-btn>
             <!-- <v-btn
@@ -1301,7 +1312,7 @@
               Unlock Reference
             </v-btn>
 
-            <v-btn color="error" @click="nameScanSend"> NameScan Clients. </v-btn>
+            <!-- <v-btn color="error" @click="nameScanSend"> NameScan Clients. </v-btn> -->
 
             <!-- <v-btn text @click="e1 = 2">back</v-btn> -->
           </v-stepper-content>
@@ -1493,7 +1504,8 @@
       </v-stepper>
     </v-dialog>
 
-    <v-dialog persistent v-model="dialogTransactionWorldRemit" max-width="800px">
+    <!-- persistent -->
+    <v-dialog v-model="dialogTransactionWorldRemit" max-width="800px">
       <v-stepper v-model="e1">
         <v-stepper-header>
           <v-stepper-step :complete="e1 > 1" step="1"
@@ -3173,6 +3185,7 @@ export default {
         mobilePhone: "",
       },
       contisend: {
+        pin:"",
         clientID: null,
         sendTypeData: "",
         recipientFirstName: "",
@@ -3948,7 +3961,7 @@ export default {
         // { title: "overall_utility-page", icon: "sort", name: "Utilities" },
         // { title: "overall_world-page", icon: "language", name: "WorldRemit" },
         // { title: "booking_admin-page", icon: "how_to_reg", name: "Booking Admin" },
-        // { title: "contisend-page", icon: "sync_alt", name: "ConitSend" },
+        { title: "contisend-page", icon: "sync_alt", name: "SahwiraSend" },
 
         {
           title: "exchange-page",
@@ -4045,13 +4058,14 @@ export default {
           amount: this.transactionData.receive_amount,
           currencyCode: this.transactionData.receive_currency_id.symbol,
         };
-        if (this.transactionData.receive_currency_id.symbol == "Bond") {
-          data.currencyCode = "ZWL";
-        }
-        Axios.post(this.nodeApi + "/contiSendRate", data, {
+        // if (this.transactionData.receive_currency_id.symbol == "Bond") {
+        //   data.currencyCode = "ZWL";
+        // }
+        Axios.post(this.nodeApi + "/sahwiraSendRate", data, {
           headers: headers,
         }).subscribe(
           (res) => {
+            
             if (res.data.code == 1) {
               this.checkCommission = false;
               this.commissions = res.data.rates.sender.totalFees;
@@ -5040,10 +5054,11 @@ export default {
             Authorization: "Bearer " + this.$session.get("user").token,
           };
           await Axios.post(
-            this.nodeApi + "/contiSendLock",
+            this.nodeApi + "/sahwiraSendLock",
             {
               transactionIndex: this.contiPayout.transactionIndex,
               oid: this.$session.get("user").userdetails.id,
+              branch_id: this.$session.get("user").userdetails.branch_id,
               reference: this.contiPayout.refNumber,
             },
             {
@@ -5666,9 +5681,9 @@ export default {
       );
     },
     async addsettlementSend() {
-      var main_amount =
-        Number(this.contisend.receive_amount) +
-        Number(this.contisend.receive_amount) * 0.05;
+      // var main_amount =
+      //   Number(this.contisend.receive_amount) +
+      //   Number(this.contisend.receive_amount) * 0.05;
       this.contisend.deposit = parseFloat(this.full_send_amount).toFixed(2);
       this.contisend.charge = parseFloat(this.commissions).toFixed(2);
       // console.log(this.contisend)
@@ -5676,7 +5691,7 @@ export default {
         "Content-Type": "application/json",
         Authorization: "Bearer " + this.$session.get("user").token,
       };
-      var url = "contiSendWR";
+      var url = "sahwiracSend";
       let data = {};
       if (this.contisend.sendTypeData == "Booking") {
         url = "contiSendWRBooking";
@@ -5721,9 +5736,9 @@ export default {
         };
       }
       if (this.contisend.sendTypeData != "Booking") {
-        if (this.contisend.receive_currency == "Bond") {
-          this.contisend.receive_currency = "ZWL";
-        }
+        // if (this.contisend.receive_currency == "Bond") {
+        //   this.contisend.receive_currency = "ZWL";
+        // }
         data = {
           data: {
             transaction: {
@@ -5782,15 +5797,10 @@ export default {
         };
       }
 
-      await Axios.post(this.nodeApi + "/" + url, data, {
-        headers: headers,
-      }).subscribe(
-        (res) => {
-          // console.log(res.data);
-          if (res.data.status == "Success") {
-            this.contisend.mainTransaction = res.data.transaction;
-            this.contisend.refNumber = res.data.transaction.transaction.wrtId;
-            this.contisend.transactionIndex = res.data.transaction.transactionIndex;
+
+            // this.contisend.mainTransaction = res.data.transaction;
+            this.contisend.refNumber = Date.now()
+            this.contisend.transactionIndex = this.contisend.refNumber
             this.contisend.recipientCell = this.contisend.recipientCell.replace(
               /[^A-Z0-9]+/gi,
               ""
@@ -5813,17 +5823,49 @@ export default {
             );
 
             this.finalContiSend(this.contisend);
-          } else {
-            this.dialogloader = false;
-            this.$swal.fire({
-              type: "error",
-              title: "Transaction Adding Failed",
-              text: res.data.message,
-            });
-          }
-        },
-        (err) => console.log(err)
-      );
+
+      // await Axios.post(this.nodeApi + "/" + url, data, {
+      //   headers: headers,
+      // }).subscribe(
+      //   (res) => {
+      //     // console.log(res.data);
+      //     if (res.data.status == "Success") {
+      //       this.contisend.mainTransaction = res.data.transaction;
+      //       this.contisend.refNumber = res.data.transaction.transaction.wrtId;
+      //       this.contisend.transactionIndex = res.data.transaction.transactionIndex;
+      //       this.contisend.recipientCell = this.contisend.recipientCell.replace(
+      //         /[^A-Z0-9]+/gi,
+      //         ""
+      //       );
+      //       this.contisend.recipientID = this.contisend.recipientID.replace(
+      //         /[^A-Z0-9]+/gi,
+      //         ""
+      //       );
+      //       this.contisend.sender_cell = this.contisend.sender_cell.replace(
+      //         /[^A-Z0-9]+/gi,
+      //         ""
+      //       );
+      //       this.contisend.first_name = this.contisend.first_name.replace(
+      //         /[^A-Z0-9]+/gi,
+      //         ""
+      //       );
+      //       this.contisend.last_name = this.contisend.last_name.replace(
+      //         /[^A-Z0-9]+/gi,
+      //         ""
+      //       );
+
+      //       this.finalContiSend(this.contisend);
+      //     } else {
+      //       this.dialogloader = false;
+      //       this.$swal.fire({
+      //         type: "error",
+      //         title: "Transaction Adding Failed",
+      //         text: res.data.message,
+      //       });
+      //     }
+      //   },
+      //   (err) => console.log(err)
+      // );
     },
     async finalContiSend(data) {
       let headers = {
@@ -6412,12 +6454,12 @@ export default {
             "Please select a client or add new client.",
             "error"
           );
-        } else if (!this.contisend.city_name) {
-          this.$swal.fire(
-            "Client Error",
-            "Please select the city where the money is being sent.",
-            "error"
-          );
+        // } else if (!this.contisend.city_name) {
+        //   this.$swal.fire(
+        //     "Client Error",
+        //     "Please select the city where the money is being sent.",
+        //     "error"
+        //   );
         } else if (!this.contisend.recipientFirstName) {
           this.$swal.fire(
             "Client Error",
@@ -6530,15 +6572,14 @@ export default {
           this.dialogloader = false;
           if (res.data.data.one.recordset[0]) {
             this.contiPayout = res.data.data.one.recordset[0];
-            this.contiPayout.first_name = data2.transaction.sender.firstName;
-            this.contiPayout.last_name = data2.transaction.sender.lastName;
-            this.contiPayout.id_number = data2.transaction.sender.nationalId;
-            this.contiPayout.cell = data2.transaction.sender.mobilePhone;
-            this.contiPayout.receive_amount =
-              data2.transaction.transaction.beneficiaryAmount;
+            this.contiPayout.first_name = data2.first_name;
+            this.contiPayout.last_name = data2.last_name;
+            this.contiPayout.id_number = data2.id_number;
+            this.contiPayout.cell = data2.cell;
+            this.contiPayout.receive_amount = data2.receive_amount;
             this.e1 = 3;
 
-            this.contisend.sender_name = `${data2.transaction.sender.firstName} ${data2.transaction.sender.lastName}`;
+            this.contisend.sender_name = `${data2.first_name} ${data2.last_name}`;
             this.contisend.recipientFirstName =
               res.data.data.one.recordset[0].recipientFirstName;
             this.contisend.recipientLastName =
@@ -6551,26 +6592,25 @@ export default {
             //   "Sorry but the reference you entered does not exit, please verify and try again.",
             //   "error"
             // );
-            this.contiPayout.recipientFirstName = data2.transaction.recipient.firstName;
-            this.contiPayout.recipientLastName = data2.transaction.recipient.lastName;
-            this.contiPayout.recipientCell = data2.transaction.recipient.mobilePhone;
-            this.contiPayout.recipientID = data2.transaction.recipient.nationalId;
-            this.contiPayout.clientID = data2.transaction.recipient.nationalId;
-            this.contiPayout.refNumber = data2.transaction.transaction.wrtId;
+            this.contiPayout.recipientFirstName = data2.recipientFirstName;
+            this.contiPayout.recipientLastName = data2.recipientLastName;
+            this.contiPayout.recipientCell = data2.recipientCell;
+            this.contiPayout.recipientID = data2.recipientID;
+            this.contiPayout.clientID = data2.clientID;
+            this.contiPayout.refNumber = data2.refNumber;
 
-            this.contiPayout.transactionIndex = data2.transaction.transactionIndex;
-            this.contiPayout.charge = data2.transaction.transaction.senderFees;
+            this.contiPayout.transactionIndex = data2.transactionIndex;
+            this.contiPayout.charge = data2.charge;
             this.contiPayout.receive_currency_id =
-              data2.transaction.transaction.beneficiaryCurrency;
-            this.contiPayout.symbol = data2.transaction.transaction.beneficiaryCurrency;
+              data2.receive_currency_id;
+            this.contiPayout.symbol = data2.receive_currency_id;
             this.contiPayout.ex = "out";
 
-            this.contiPayout.first_name = data2.transaction.sender.firstName;
-            this.contiPayout.last_name = data2.transaction.sender.lastName;
-            this.contiPayout.id_number = data2.transaction.sender.nationalId;
-            this.contiPayout.cell = data2.transaction.sender.mobilePhone;
-            this.contiPayout.receive_amount =
-              data2.transaction.transaction.beneficiaryAmount;
+            this.contiPayout.first_name = data2.firstName;
+            this.contiPayout.last_name = data2.lastName;
+            this.contiPayout.id_number = data2.nationalId;
+            this.contiPayout.cell = data2.mobilePhone;
+            this.contiPayout.receive_amount = data2.receive_amount;
             this.e1 = 3;
           }
         },
@@ -6587,7 +6627,7 @@ export default {
         Authorization: "Bearer " + this.$session.get("user").token,
       };
       await Axios.post(
-        this.nodeApi + "/contiSendAPICheckRefWR",
+        this.nodeApi + "/sahwiraCheckRef",
         {
           refNumber: data,
         },
@@ -6596,11 +6636,16 @@ export default {
         }
       ).subscribe(
         (res) => {
-          if (res.data.status == "Success") {
+          if (res.data.status == "Pending") {
             this.checkContiSendRef(data, res.data);
-          } else {
+          }
+          else if (res.data.status == "Locked") {
             this.dialogloader = false;
-            this.$swal.fire("Reference Error", res.data.message, "error");
+            this.$swal.fire("Reference Error","Transaction already collected ", "error");
+          } 
+          else {
+            this.dialogloader = false;
+            this.$swal.fire("Reference Error","Invalid transaction number", "error");
           }
         },
         (err) => {
@@ -7586,7 +7631,7 @@ export default {
         this.getAllCurrenciesActive();
         this.getDSTvSelect();
         this.getDSTvCheck();
-      } else if (transactionType == "ContiSend") {
+      } else if (transactionType == "SahwiraSend") {
         this.dialogTransactionSend = true;
         this.transaction_type = transactionType;
         //this.getAllClients()

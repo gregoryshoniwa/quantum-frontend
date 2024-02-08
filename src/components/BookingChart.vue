@@ -45,7 +45,7 @@ export default {
   watch: {
     ToggleCurrency(val) {
       this.loadGraphData(val);
-      //console.log(val)
+      console.log(val)
     },
   },
   methods: {

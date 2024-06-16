@@ -5,6 +5,24 @@
       <v-divider class="mx-2" inset vertical></v-divider>
       <v-spacer></v-spacer>
       <v-btn color="primary" @click="openAddNewUser">Create Client</v-btn>
+      <v-btn class="white--text" color="green" @click="triggerFileInput">Upload XLS</v-btn>
+      <input type="file" ref="fileInput" @change="handleFileUpload" style="display: none" />
+      <v-tooltip bottom>
+        <template v-slot:activator="{ on }">
+          <v-btn icon>
+            <export-excel
+              class="btn btn-default"
+              :data="UsersData"
+              :fields="json_fields_user"
+              worksheet="Tran_Worksheet"
+              name="Customers.xls"
+            >
+              <v-icon v-on="on" color="green darken-2">library_add</v-icon>
+            </export-excel>
+          </v-btn>
+        </template>
+        <span>Export to excel</span>
+      </v-tooltip>
 
       <v-dialog v-model="dialogUser" max-width="600px">
         <v-stepper v-model="e1">
@@ -143,6 +161,15 @@
               </v-btn>
             </template>
             <span>Client Buy History</span>
+          </v-tooltip>
+
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-btn small color="green" icon @click="uploadClient(props.item)">
+                <v-icon v-on="on" small class="white--text"> cloud_upload </v-icon>
+              </v-btn>
+            </template>
+            <span>Upload Client</span>
           </v-tooltip>
         </td>
         <!-- <td class="justify-left">
@@ -340,6 +367,16 @@ export default {
         { text: "Nationality", value: "nationality" },
         { text: "Actions", value: "nationality" },
       ],
+      json_fields_user: {
+        "Client Id": "id",
+        "First Name": "first_name",
+        "Last Name": "last_name",
+        "National ID": "id_number",
+        "Date of birth": "date_of_birth",
+        "Cell number": "cell",
+        "Nationality": "nationality",
+        "Address": "address",
+      },
       headersClients: [
         { text: "Branch", value: "branch" },
         {
@@ -454,6 +491,88 @@ export default {
     },
   },
   methods: {
+    async uploadClient(data){
+      console.log(data);
+      let headers = {
+        "Content-Type": "application/json",
+        access_key: "5b273adf-69bc-4452-8467-a08f9ef60048",
+      };
+      await Axios.post(" http://ec2-13-245-172-48.af-south-1.compute.amazonaws.com:8082/v1/api/ftp/smt/customer/save",
+      {
+        "firstName": this.data.first_name,
+        "lastName": this.data.lastName,
+        "email": this.data.email,
+        "customerId": this.data.id,
+        "dateCaptured": Date.now().toLocaleString(),
+        "dateOfBirth": this.data.date_of_birth,
+        "city": "",
+        "gender": "",
+        "idNumber": this.data.id_number,
+        "customerType": "",
+        "province": "",
+        "homeAddress": this.data.address,
+        "primaryContactNumber": this.data.cell,
+        "secondaryContactNumber": ""
+      }
+      ,
+        { headers: headers }
+      ).subscribe(
+        (res) => {
+          this.rows = res.data.data.one.recordset;
+          this.dialogdaterange = false;
+          this.specificReport = true;
+          //console.log(this.companyData)
+        },
+        (err) =>{ 
+          console.log(err)
+          this.$swal.fire({
+            type: "error",
+            title: "Client Uploading Failed",
+            text: err,
+          });
+        }
+      );
+    },
+    triggerFileInput() {
+      this.$refs.fileInput.click();
+    },
+    async handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const filename = encodeURIComponent(file.name); // Encode the file name to ensure it's URL-safe
+        const url = `http://ec2-13-245-172-48.af-south-1.compute.amazonaws.com:8082/v1/api/ftp/file/save/SMT/${filename}`;
+        const headers = {
+          'access_key': '5b273adf-69bc-4452-8467-a08f9ef60048'
+        };
+
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: formData
+          });
+
+          if (response.ok) {
+            console.log('successful');
+          } else {
+            console.log('failed');
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          this.$swal.fire({
+            type: 'error',
+            title: 'File Upload Failed',
+            text: error.message,
+          });
+        }
+      }
+
+      
+    },
     async daterange() {
       var currentdate = new Date(this.end_date);
       currentdate.setDate(currentdate.getDate() + 1);

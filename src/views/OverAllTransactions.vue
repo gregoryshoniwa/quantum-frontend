@@ -87,7 +87,8 @@
         <v-btn color="#ECB530" class="white--text" @click="dialogdaterange = true">
           Specific Range
         </v-btn>
-
+        <v-btn class="white--text" color="green" @click="triggerFileInput">Upload XLS</v-btn>
+        <input type="file" ref="fileInput" @change="handleFileUpload" style="display: none" />
         <v-tooltip bottom>
           <template v-slot:activator="{ on }">
             <v-btn icon @click="exportExcel">
@@ -273,6 +274,14 @@
                 >
                   {{ props.item.reversed_by }} @ {{ props.item.reversed_at }}
                 </v-chip>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on }">
+                    <v-btn small color="blue" icon @click="uploadClient(props.item)">
+                      <v-icon v-on="on" small class="white--text"> cloud_upload </v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Upload Transaction</span>
+                </v-tooltip>
               </td>
             </tr>
           </template>
@@ -330,6 +339,7 @@ import * as autoTable from "jspdf-autotable";
 import Axios from "axios-observable";
 export default {
   data: () => ({
+    specificReport: false,
     allRates: [],
     disable: false,
     totalFloat: [],
@@ -407,6 +417,29 @@ export default {
       "Total Received Amount": "receive_amountT",
       "Disburse Currency": "disbursed_currencyT",
       "Total Disbursed Amount": "disburse_amountT",
+    },
+    json_fields_csv: {
+      "Transaction Id": "id",
+      "Client Id": "client_id",
+      "Txn Name": "transaction_type",
+      "Amount In": "receive_amount",
+      "Amount Out": "disburse_amount",
+      "Used Rate": "rate",
+      "Tran Branch id": "name",
+      "In Currency": "receive_currency",
+      "Out Currency": "disburse_currency",
+      "Creator": "created_by",
+      "Tran Date_Tim": "date_time",
+      "If End of Day": "banked_at",
+      "Time EOD": "space",
+
+      "Reverse user": "reversed_by",
+      "Reverse DT": "reversed_at",
+      "Client Fullname": "full_name",
+      "Txn Reference": "space",
+      "Service Provider": "space",
+      "Txn Commission": "space",
+
     },
     json_data: [],
     json_meta: [
@@ -929,12 +962,92 @@ export default {
     // console.log(this.now_date)
   },
   methods: {
+    async uploadClient(data){
+      console.log(data);
+      let headers = {
+        "Content-Type": "application/json",
+        access_key: "5b273adf-69bc-4452-8467-a08f9ef60048",
+      };
+      await Axios.post("http://ec2-13-245-172-48.af-south-1.compute.amazonaws.com:8082/v1/api/ftp/smt/txn/save",
+      {
+        "customerId": "CUST001",
+        "txnStatus": data.status,
+        "txnId": data.id,
+        "txnType": data.transaction_type,
+        "txnDate": data.created_at,
+        "receiveAmount": data.receive_amount,
+        "receiveCurrencyCode": data.receive_currency,
+        "disbursedAmount": data.disburse_amount,
+        "disbursedCurrencyCode": data.disburse_currency,
+        "branchName": data.name,
+      }
+      
+      ,
+        { headers: headers }
+      ).subscribe(
+        (res) => {
+          this.rows = res.data.data.one.recordset;
+          this.dialogdaterange = false;
+          this.specificReport = true;
+          //console.log(this.companyData)
+        },
+        (err) => { 
+          console.log(err)
+          this.$swal.fire({
+            type: "error",
+            title: "Transaction Uploading Failed",
+            text: err,
+          });
+        }
+      );
+    },
+    triggerFileInput() {
+      this.$refs.fileInput.click();
+    },
+    async handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const filename = encodeURIComponent(file.name); // Encode the file name to ensure it's URL-safe
+        const url = `http://ec2-13-245-172-48.af-south-1.compute.amazonaws.com:8082/v1/api/ftp/file/save/SMT/${filename}`;
+        const headers = {
+          'access_key': '5b273adf-69bc-4452-8467-a08f9ef60048'
+        };
+
+        try {
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: headers,
+            body: formData
+          });
+
+          if (response.ok) {
+            console.log('successful');
+          } else {
+            console.log('failed');
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          this.$swal.fire({
+            type: 'error',
+            title: 'File Upload Failed',
+            text: error.message,
+          });
+        }
+      }
+
+      
+    },
     convertDate() {
       var rawDate = new Date();
       this.now_date = rawDate.toISOString();
     },
 
     async daterange() {
+
       var currentdate = new Date(this.end_date);
       currentdate.setDate(currentdate.getDate() + 1);
       var fulldate = currentdate.toISOString();
@@ -955,6 +1068,7 @@ export default {
           (res) => {
             this.rows = res.data.data.one.recordset;
             this.dialogdaterange = false;
+            this.specificReport = true;
             //console.log(this.companyData)
           },
           (err) => console.log(err)
@@ -1016,6 +1130,7 @@ export default {
           (res) => {
             this.rows = res.data.data.one.recordset;
             this.dialogdaterange = false;
+            this.specificReport = false;
             //console.log(this.companyData)
           },
           (err) => console.log(err)
@@ -1048,6 +1163,7 @@ export default {
           (res) => {
             this.rows = res.data.data.one.recordset;
             this.dialogdaterange = false;
+            this.specificReport = true;
             //console.log(this.companyData)
           },
           (err) => console.log(err)
@@ -1078,6 +1194,7 @@ export default {
           (res) => {
             this.rows = res.data.data.one.recordset;
             this.dialogdaterange = false;
+            this.specificReport = false;
             //console.log(this.companyData)
           },
           (err) => console.log(err)
@@ -1110,6 +1227,7 @@ export default {
           (res) => {
             this.rows = res.data.data.one.recordset;
             this.dialogdaterange = false;
+            this.specificReport = true;
             //console.log(this.companyData)
           },
           (err) => console.log(err)
@@ -1129,6 +1247,7 @@ export default {
           (res) => {
             this.rows = res.data.data.one.recordset;
             this.dialogdaterange = false;
+            this.specificReport = false;
             //console.log(this.companyData)
           },
           (err) => console.log(err)
@@ -1161,6 +1280,7 @@ export default {
           (res) => {
             this.rows = res.data.data.one.recordset;
             this.dialogdaterange = false;
+            this.specificReport = true;
             //console.log(this.companyData)
           },
           (err) => console.log(err)
@@ -1180,6 +1300,7 @@ export default {
           (res) => {
             this.rows = res.data.data.one.recordset;
             this.dialogdaterange = false;
+            this.specificReport = false;
             //console.log(this.companyData)
           },
           (err) => console.log(err)
@@ -1212,6 +1333,7 @@ export default {
           (res) => {
             this.rows = res.data.data.one.recordset;
             this.dialogdaterange = false;
+            this.specificReport = false;
             //console.log(this.companyData)
           },
           (err) => console.log(err)
@@ -1384,6 +1506,7 @@ export default {
       }).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1410,6 +1533,7 @@ export default {
       }).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1436,6 +1560,7 @@ export default {
       }).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1458,6 +1583,7 @@ export default {
       }).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1482,6 +1608,7 @@ export default {
       ).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1500,6 +1627,7 @@ export default {
       ).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1515,6 +1643,7 @@ export default {
       }).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1542,6 +1671,7 @@ export default {
       ).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1559,6 +1689,7 @@ export default {
       ).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1576,6 +1707,7 @@ export default {
       ).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1591,6 +1723,7 @@ export default {
       }).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1608,6 +1741,7 @@ export default {
       ).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1625,6 +1759,7 @@ export default {
       ).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1642,6 +1777,7 @@ export default {
       ).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)
@@ -1659,6 +1795,7 @@ export default {
       ).subscribe(
         (res) => {
           this.rows = res.data.data.one.recordset;
+          this.specificReport = false;
           //console.log(this.companyData)
         },
         (err) => console.log(err)

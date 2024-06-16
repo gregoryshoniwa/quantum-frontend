@@ -58,8 +58,26 @@
                   ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm6 md6>
+                  <v-select
+                    v-model="editedUser.gender"
+                    label="Gender"
+                    item-text="status"
+                    item-value="id"
+                    :items="userGender"
+                  >
+                  </v-select>
+                </v-flex>
+                <v-flex xs12 sm6 md6>
                   <vue-tel-input
                     v-model="editedUser.cell"
+                    @input="getTelePhone"
+                    style="margin-top: 15px"
+                    v-bind:style="{ color: isActive ? 'red' : 'blue' }"
+                  ></vue-tel-input>
+                </v-flex>
+                <v-flex xs12 sm6 md6>
+                  <vue-tel-input
+                    v-model="editedUser.secondaryCell"
                     @input="getTelePhone"
                     style="margin-top: 15px"
                     v-bind:style="{ color: isActive ? 'red' : 'blue' }"
@@ -82,6 +100,18 @@
                   <v-text-field
                     v-model="editedUser.address"
                     label="Address"
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md6>
+                  <v-text-field
+                    v-model="editedUser.city"
+                    label="City"
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs12 sm6 md6>
+                  <v-text-field
+                    v-model="editedUser.province"
+                    label="Province"
                   ></v-text-field>
                 </v-flex>
               </v-layout>
@@ -348,6 +378,10 @@ export default {
         { status: "Individual", id: 1 },
         { status: "Company", id: 0 },
       ],
+      userGender: [
+        { status: "MALE", id: 1 },
+        { status: "FEMALE", id: 0 },
+      ],
       UsersData: [],
       statusData: [
         { status: "Active", id: 2 },
@@ -408,6 +442,8 @@ export default {
         last_name: "",
         email: "",
         id_number: "",
+        gender : "",
+        secondaryCell: "",
         date_of_birth: null,
         address: "",
         countryCode: "",
@@ -418,6 +454,8 @@ export default {
         status: 2,
         cell: "",
         created_by: 0,
+        city : "",
+        province: "",
       },
       json_fields: {
         "Branch Name": "branch",
@@ -448,6 +486,8 @@ export default {
         status: 2,
         cell: "",
         created_by: 0,
+        city : "",
+        province: "",
       },
       selectedClientData: null,
       clientTransactionType: null,
@@ -486,6 +526,9 @@ export default {
         this.editedUser.date_of_birth = null;
         this.editedUser.address = "";
         this.editedUser.cell = "";
+        this.editedUser.secondaryCell ="";
+        this.editedUser.city = "";
+        this.editedUser.province = "";
         this.e1 = 1;
       }
     },
@@ -499,20 +542,20 @@ export default {
       };
       await Axios.post(" http://ec2-13-245-172-48.af-south-1.compute.amazonaws.com:8082/v1/api/ftp/smt/customer/save",
       {
-        "firstName": this.data.first_name,
-        "lastName": this.data.lastName,
-        "email": this.data.email,
-        "customerId": this.data.id,
+        "firstName": data.first_name,
+        "lastName": data.lastName,
+        "email": data.email,
+        "customerId": data.id,
         "dateCaptured": Date.now().toLocaleString(),
-        "dateOfBirth": this.data.date_of_birth,
-        "city": "",
-        "gender": "",
-        "idNumber": this.data.id_number,
-        "customerType": "",
-        "province": "",
-        "homeAddress": this.data.address,
-        "primaryContactNumber": this.data.cell,
-        "secondaryContactNumber": ""
+        "dateOfBirth": data.date_of_birth,
+        "city": data.city,
+        "gender": data.gender == 0 ? "FEMALE" : "MALE",
+        "idNumber": data.id_number,
+        "customerType": data.company_id == 0 ? "COMPANY" : "INDIVIDUAL",
+        "province": data.province,
+        "homeAddress": data.address,
+        "primaryContactNumber": data.cell,
+        "secondaryContactNumber": data.secondaryCell
       }
       ,
         { headers: headers }

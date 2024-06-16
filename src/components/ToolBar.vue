@@ -1788,6 +1788,16 @@
                 ></v-text-field>
               </v-flex>
               <v-flex xs12 sm6 md6>
+                <v-select
+                  v-model="editedClient.gender"
+                  label="Gender"
+                  item-text="status"
+                  item-value="id"
+                  :items="userGender"
+                >
+                </v-select>
+              </v-flex>
+              <v-flex xs12 sm6 md6>
                 <vue-tel-input
                   v-model="editedClient.cell"
                   @input="getTelePhone"
@@ -1795,6 +1805,15 @@
                   v-bind:style="{ color: isActive ? 'red' : 'blue' }"
                 ></vue-tel-input>
               </v-flex>
+              <v-flex xs12 sm6 md6>
+                <vue-tel-input
+                  v-model="editedClient.secondaryCell"
+                  @input="getTelePhone"
+                  style="margin-top: 15px"
+                  v-bind:style="{ color: isActive ? 'red' : 'blue' }"
+                ></vue-tel-input>
+              </v-flex>
+            
               <v-flex xs12 sm6 md6>
                 <v-text-field
                   v-model="editedClient.email"
@@ -1812,6 +1831,18 @@
                 <v-text-field
                   v-model="editedClient.address"
                   label="Address"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 md6>
+                <v-text-field
+                  v-model="editedClient.city"
+                  label="City"
+                ></v-text-field>
+              </v-flex>
+              <v-flex xs12 sm6 md6>
+                <v-text-field
+                  v-model="editedClient.province"
+                  label="Province"
                 ></v-text-field>
               </v-flex>
             </v-layout>
@@ -3089,6 +3120,10 @@ export default {
         { value: "M", name: "Male" },
         { value: "F", name: "Female" },
       ],
+      userGender: [
+        { status: "MALE", id: 1 },
+        { status: "FEMALE", id: 0 },
+      ],
       newScanData: null,
       clientIDWorldRemit: "",
       scanFullName: "",
@@ -3352,7 +3387,10 @@ export default {
         nationality: "",
         status: 2,
         cell: "",
+        secondaryCell: "",
         created_by: 0,
+        city : "",
+        province: "",
       },
       overridePin: null,
       ClearUser: {
@@ -3361,6 +3399,7 @@ export default {
         last_name: "",
         email: "",
         id_number: "",
+        gender: "",
         date_of_birth: null,
         address: "",
         company_id: 1,
@@ -3369,7 +3408,10 @@ export default {
         nationality: "",
         status: 2,
         cell: "",
+        secondaryCell: "",
         created_by: 0,
+        city : "",
+        province: ""
       },
       group: null,
       items: [],
@@ -3644,6 +3686,11 @@ export default {
         this.editedClient.date_of_birth = null;
         this.editedClient.address = "";
         this.editedClient.cell = "";
+
+        this.editedClient.gender = null;
+        this.editedClient.city = "";
+        this.editedClient.province = "";
+        this.editedClient.secondaryCell = "";
         this.annonimous = true;
         this.clientDisabled = false;
         this.transactionData.receive_currency_id = "";
@@ -3697,6 +3744,12 @@ export default {
         this.editedClient.date_of_birth = null;
         this.editedClient.address = "";
         this.editedClient.cell = "";
+
+        this.editedClient.gender = null;
+        this.editedClient.city = "";
+        this.editedClient.province = "";
+        this.editedClient.secondaryCell = "";
+
         this.annonimous = true;
         this.clientDisabled = false;
         this.transactionData.receive_currency_id = "";

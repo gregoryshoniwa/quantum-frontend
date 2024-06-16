@@ -970,7 +970,7 @@ export default {
       };
       await Axios.post("http://ec2-13-245-172-48.af-south-1.compute.amazonaws.com:8082/v1/api/ftp/smt/txn/save",
       {
-        "customerId": "CUST001",
+        "customerId": data.client_id,
         "txnStatus": data.status,
         "txnId": data.id,
         "txnType": data.transaction_type,

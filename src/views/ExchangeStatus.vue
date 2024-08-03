@@ -348,6 +348,14 @@
         <v-btn color="blue" class="white--text" @click="daterange">Filter</v-btn>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="dialogloader" hide-overlay persistent width="300">
+      <v-card color="#ECB530" dark>
+        <v-card-text>
+          Please stand by
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -364,7 +372,7 @@ export default {
       phoneData: "",
       counter: 0,
       isActive: true,
-
+      dialogloader: false,
       toggleDates: "1",
       end_date: null,
       start_date: null,
@@ -535,18 +543,19 @@ export default {
   },
   methods: {
     async uploadClient(data){
+      this.dialogloader = true;
       console.log(data);
       let headers = {
         "Content-Type": "application/json",
         access_key: "5b273adf-69bc-4452-8467-a08f9ef60048",
       };
-      await Axios.post(" http://ec2-13-245-172-48.af-south-1.compute.amazonaws.com:8082/v1/api/ftp/smt/customer/save",
+      await Axios.post("https://stge.sahwi.net/v1/api/ftp/smt/customer/save",
       {
         "firstName": data.first_name,
-        "lastName": data.lastName,
+        "lastName": data.last_name,
         "email": data.email,
-        "customerId": data.id,
-        "dateCaptured": Date.now().toLocaleString(),
+        "customerId": data.id.toString(),
+        "dateCaptured": new Date(Date.now()).toISOString(),
         "dateOfBirth": data.date_of_birth,
         "city": data.city,
         "gender": data.gender == 0 ? "FEMALE" : "MALE",
@@ -561,12 +570,16 @@ export default {
         { headers: headers }
       ).subscribe(
         (res) => {
-          this.rows = res.data.data.one.recordset;
-          this.dialogdaterange = false;
-          this.specificReport = true;
-          //console.log(this.companyData)
+          this.dialogloader = false;
+          
+          this.$swal.fire({
+            type: "success",
+            title: "Client Saving",
+            text: res.data.message,
+          });
         },
         (err) =>{ 
+          this.dialogloader = false;
           console.log(err)
           this.$swal.fire({
             type: "error",
@@ -580,13 +593,14 @@ export default {
       this.$refs.fileInput.click();
     },
     async handleFileUpload(event) {
+      this.dialogloader = true;
       const file = event.target.files[0];
       if (file) {
         const formData = new FormData();
         formData.append('file', file);
 
         const filename = encodeURIComponent(file.name); // Encode the file name to ensure it's URL-safe
-        const url = `http://ec2-13-245-172-48.af-south-1.compute.amazonaws.com:8082/v1/api/ftp/file/save/SMT/${filename}`;
+        const url = `https://stge.sahwi.net/v1/api/ftp/file/save/SMT/${filename}`;
         const headers = {
           'access_key': '5b273adf-69bc-4452-8467-a08f9ef60048'
         };
@@ -599,12 +613,15 @@ export default {
           });
 
           if (response.ok) {
+            this.dialogloader = false;
             console.log('successful');
           } else {
+            this.dialogloader = false;
             console.log('failed');
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
         } catch (error) {
+          this.dialogloader = false;
           console.error('Error:', error);
           this.$swal.fire({
             type: 'error',

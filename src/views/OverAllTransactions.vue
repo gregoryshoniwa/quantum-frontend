@@ -971,6 +971,39 @@ export default {
     // console.log(this.now_date)
   },
   methods: {
+   getMonthNumber(monthName) {
+    const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    return months.indexOf(monthName);
+},
+
+// Convert date string to desired format
+ convertDateString(input) {
+    // Extract components from the input string
+    const [dayOfWeek, dayWithSuffix, month, time, period] = input.split(' ');
+
+    // Remove the suffix from the day
+    const day = parseInt(dayWithSuffix.replace(/\D/g, ''), 10);
+
+    // Get month number
+    const monthNumber = this.getMonthNumber(month);
+
+    // Extract hours and minutes
+    let [hours, minutes] = time.split(':').map(Number);
+
+    // Adjust hours for AM/PM
+    if (period === "PM" && hours !== 12) {
+        hours += 12;
+    } else if (period === "AM" && hours === 12) {
+        hours = 0;
+    }
+
+    // Create Date object (assuming the year is 2024 for this example)
+    const date = new Date(2024, monthNumber, day, hours, minutes);
+
+    // Format the date to "2024-05-22T15:15:54"
+    return date.toISOString();
+},
+
     async uploadClient(data){
       this.dialogloader = true;
       console.log(data);
@@ -984,7 +1017,7 @@ export default {
         "txnStatus": data.status,
         "txnId": data.id,
         "txnType": data.transaction_type,
-        "txnDate": data.created_at,
+        "txnDate": this.convertDateString(data.created_at),
         "receiveAmount": data.receive_amount,
         "receiveCurrencyCode": data.receive_currency,
         "disbursedAmount": data.disburse_amount,
@@ -1024,7 +1057,7 @@ export default {
       const file = event.target.files[0];
       if (file) {
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('data', file);
 
         const filename = encodeURIComponent(file.name); // Encode the file name to ensure it's URL-safe
         const url = `https://stge.sahwi.net/v1/api/ftp/file/save/SMT/${filename}`;

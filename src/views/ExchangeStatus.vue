@@ -597,7 +597,7 @@ export default {
       const file = event.target.files[0];
       if (file) {
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('data', file);
 
         const filename = encodeURIComponent(file.name); // Encode the file name to ensure it's URL-safe
         const url = `https://stge.sahwi.net/v1/api/ftp/file/save/SMT/${filename}`;
